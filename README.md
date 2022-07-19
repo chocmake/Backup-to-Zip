@@ -15,7 +15,9 @@ Showing first setting up the sources and destination with the script, then using
 
 ![Demo-1](https://user-images.githubusercontent.com/34178938/179670325-24cfa20f-a239-4b8a-b343-c62c27da9365.gif)
 
-Alternative way to add sources/destination individually into the script window, useful if files/directories are spread across different windows. Here using the date-only setting for zip filenames. Also showing if one wants to add comments to zip filenames how the script expects them placed at the end in square brackets.
+Alternative way to add sources/destination individually into the script window, useful if files/directories are spread across different windows. Here using the date-only setting for zip filenames.
+
+> Also showing if one wants to add comments to zip filenames how the script expects them placed at the end in square brackets.
 
 ![Demo-2](https://user-images.githubusercontent.com/34178938/179670339-4cb5fda0-bfac-4c8b-a6c1-7222cd86d984.gif)
 
