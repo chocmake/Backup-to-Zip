@@ -33,6 +33,8 @@ Alternative way to add sources/destination individually into the script window, 
 
 ![Demo-3](https://user-images.githubusercontent.com/34178938/179670347-6faec160-1bdd-4bcd-b970-afeb6f719e22.gif)
 
+- If 7-Zip reports that some file(s) couldn't be included in the zip (due to eg: an application in use locking them, or they were renamed or moved) the script will list which file(s) are missing and add `[m]` to the filename of the zip.
+
 ## Limitations
 
 - LNK files have limits to their field length of ~32k afaict (used by the script to store the sources/destination/custom name) and CMD itself has its own max buffer size. Something to keep in mind as the use case for the script was originally for mostly directory paths of game saves (which are typically just the parent directory paths and some single files, rather than hundreds/thousands of individual source paths entered which would need to be stored in the LNK's field).
