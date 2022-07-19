@@ -35,7 +35,7 @@ Alternative way to add sources/destination individually into the script window, 
 
 - If 7-Zip reports that some file(s) couldn't be included in the zip (due to eg: an application in use locking them, or they were renamed or moved) the script will list which file(s) are missing and add `[m]` to the filename of the zip.
 
-- If the entered Destination path doesn't exist (eg: if it's a file instead of a directory or the path doesn't exist, such as when pasting it in) the script will re-prompt for a valid directory.
+- If the entered Destination path doesn't exist (eg: if it's a file instead of a directory or the path doesn't exist, such as when typing/pasting one in) the script will re-prompt for a valid directory.
 
 ## Limitations
 
