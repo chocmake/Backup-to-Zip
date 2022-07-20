@@ -8,7 +8,7 @@
 :: Requirements:    7-Zip (CLI), Powershell (native to Windows)
 :: URL:             https://github.com/chocmake/Backup-to-Zip
 :: Author:          choc
-:: Version:         0.1 (2022-07-18)
+:: Version:         0.1.1 (2022-07-20)
 
 :: Note:            Keep this script in the same location, otherwise previously created
 ::                  shortcuts won't be able to find it.
@@ -197,6 +197,7 @@ exit
             setlocal disabledelayedexpansion
             set "p=%%p"
             setlocal enabledelayedexpansion
+            set "p=!p:"=!"
             call :len p pheight
             call :linescalc pheight
             set /a "inheightall=!inheightall!+(!pheight!+1)"
