@@ -1,5 +1,5 @@
 # Backup to Zip
-Generate a shortcut (LNK) that when opened creates an auto timestamped ZIP using 7-Zip of the specified source files at a destination. Made originally as a straightforward, quick way for versioning game save file directories and config files.
+Generate a shortcut (LNK) that when opened creates an auto timestamped ZIP using 7-Zip of the specified source files at a destination. Made originally as a straightforward, quick way for versioning game save file directories and config files, keeping them neat and organized.
 
 ## Setup and basic usage
 
