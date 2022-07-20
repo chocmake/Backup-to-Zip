@@ -41,7 +41,7 @@ Alternative way to add sources/destination individually into the script window, 
 
 ## Limitations
 
-- LNK files have limits to their field length of ~32k afaict (used by the script to store the sources/destination/custom name) and CMD itself has its own max buffer size. Something to keep in mind as the use case for the script was originally for mostly directory paths of game saves (which are typically just the parent directory paths and some single files, rather than hundreds/thousands of individual source paths entered which would need to be stored in the LNK's field).
+- LNK files have limits to their field length of ~32k afaict (used by the script to store the sources/destination/custom name) and CMD itself has its own max buffer size. Something to keep in mind as the use case for the script was originally for mostly directory paths of game saves (which are typically just the parent directory paths and some single file paths, rather than hundreds/thousands of individual source paths entered which would need to be stored in the LNK's field).
 - The common, widely used method to generate the LNK shortcut (WScript.Shell) fails to work with some very specific Unicode characters in filenames (in my testing U+FF1F and U+2215), while being fine with everything else I've tried.
 - It doesn't yet check for whether a Destination directory has write permissions for the current user and will fail to initially create the LNK if it can't write to it.
 - Only works for paths with drive letters currently (ie: won't work on unmapped network paths).
