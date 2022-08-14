@@ -8,7 +8,7 @@
 :: Requirements:    7-Zip (CLI), Powershell (native to Windows)
 :: URL:             https://github.com/chocmake/Backup-to-Zip
 :: Author:          choc
-:: Version:         0.1.1 (2022-07-20)
+:: Version:         0.1.2 (2022-08-14)
 
 :: Note:            Keep this script in the same location, otherwise previously created
 ::                  shortcuts won't be able to find it.
@@ -404,19 +404,19 @@ exit
             if "%~1"=="destdir" (
                 set isfile=1&pushd "!%~1!" 2>nul&&(popd&set isfile=)||(if not exist "!%~1!" set isfile=)
                 if defined isfile set "%~1=" & goto :inputprompts
+                :: Remove double quotes if present
+                set "destdir=!destdir:"=!"
+                :: Trim any trailing backslash
+                if "!destdir:~-1!"=="\" (
+                    call :len destdir destdirlen
+                    set /a "destdirlen-=1"
+                    for %%l in (!destdirlen!) do set "destdir=!destdir:~0,%%l!"
                 )
-            :: Remove double quotes if present
-            set "destdir=!destdir:"=!"
-            :: Trim any trailing backslash
-            if "!destdir:~-1!"=="\" (
-                call :len destdir destdirlen
-                set /a "destdirlen-=1"
-                for %%l in (!destdirlen!) do set "destdir=!destdir:~0,%%l!"
-            )
-            :: Restore double quotes
-            set "destdir="!destdir!""
-            :: Check if directory exists, otherwise re-prompt for input
-            if not exist !destdir! set "destdir=" & goto :inputprompts
+                :: Restore double quotes
+                set "destdir="!destdir!""
+                :: Check if directory exists, otherwise re-prompt for input
+                if not exist !destdir! set "destdir=" & goto :inputprompts
+                )
             call :cmdheight "%~1" & goto :inputprompts
             ) else (
             if "%~1"=="destname" set "destname=[empty]"
