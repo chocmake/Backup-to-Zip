@@ -4,8 +4,9 @@ Generate a shortcut (LNK) that when opened creates an auto timestamped ZIP using
 ## Setup and basic usage
 
 1. Firstly have [7-Zip](https://www.7-zip.org/index.html) installed, then add its directory to the Windows PATH environment variable for your account so the script can find it (follow [this GIF guide](https://user-images.githubusercontent.com/34178938/179670355-82005d39-8277-42cf-a49f-05045e3b8699.gif)).
-2. Download the Backup to Zip script either above or in zipped form [here](https://github.com/chocmake/Backup-to-Zip/releases/download/0.1.1/0.1.1.2022-07-20.zip).
-3. Then set up the Source/Destination and optional shortcut name using the script as seen in the GIFs below. Once the shortcut is made you just double-click it from then on to output a timestamped zip.
+2. Download the Backup to Zip script either above or in zipped form [here](https://github.com/chocmake/Backup-to-Zip/releases/download/0.1.2/0.1.2.2022-08-14.zip).
+3. Then set up the Source/Destination and optional shortcut name using the script as seen in the GIFs below.
+4. Once the shortcut is made double-clicking the shortcut from then on will output a timestamped zip.
 
 > The shortcut can also be moved elsewhere once created, just remember to keep the script in the same location so the shortcut can find it.
 
