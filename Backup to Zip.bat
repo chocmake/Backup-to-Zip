@@ -4,19 +4,19 @@
 :: Name:            Backup to Zip
 :: Description:     Specify some source files/directories and a destination and the script
 ::                  will generate a shortcut that when launched will output a timestamped
-::                  ZIP each time. Useful for versioning things like game saves, etc.
+::                  archive each time. Useful for versioning things like game saves, etc.
 :: Requirements:    7-Zip (CLI), Powershell (native to Windows)
 :: URL:             https://github.com/chocmake/Backup-to-Zip
 :: Author:          choc
-:: Version:         0.1.2 (2022-08-14)
+:: Version:         0.1.3 (2023-02-06)
 
 :: Note:            Keep this script in the same location, otherwise previously created
 ::                  shortcuts won't be able to find it.
 
-:: Note:            If you'd like to add custom comments to the ZIP filenames add them 
+:: Note:            If you'd like to add custom comments to the archive filenames add them 
 ::                  after the date/time and wrap the comments in square brackets.
 ::                  Eg: '2022-01-25 [my comment here].zip'
-::                  This is so the script can detect and auto-rename ZIPs that share the
+::                  This is so the script can detect and auto-rename archives that share the
 ::                  same date if the 'timeinfilename' setting is disabled below.
 
 :: Tip:             The original source/destination paths can be extracted to a text file
@@ -29,9 +29,17 @@
 :: --------------------------------------- Settings ----------------------------------------
 :: -----------------------------------------------------------------------------------------
 
-:: If enabled will append the current time to ZIP filenames. If disabled only dates will
+:: Archive type to use for output.
+:: Valid values: zip, 7z
+set archivetype=zip
+
+:: If enabled will append the current time to archive filenames. If disabled only dates will
 :: be used and filenames auto-renamed with a counter if two or more share the same date.
 set timeinfilename=yes
+
+:: If enabled will copy the Date Created and Date Accessed timestamp(s) of the source.
+:: Normally only the Date Modified timestamp(s) are copied.
+set preservealltimestamps=yes
 
 :: Hour format for filename timestamps
 :: Valid values: 12, 24
@@ -50,8 +58,8 @@ set colorscheme=auto
 
 setlocal enableextensions enabledelayedexpansion
 
-call :initformat
 call :detectcolorscheme
+call :initformat
 call :detectbinaries 7z powershell
 call :scriptargs
 
@@ -62,7 +70,7 @@ if not "!cmdcmdline!"=="!cmdcmdline:-btzdest=!" (
     call :datetime
 
     :: Create the archive
-    7z a !zippath! !input! >nul 2>&1
+    7z !artype! !exttimestamps! a !zippath! !input! >nul 2>&1
     if !errorlevel! neq 0 (
         set "7ziperrorlevel=!errorlevel!"
         call :7ziperror
@@ -122,7 +130,7 @@ exit
             )
         call :cmdheightmanual "!cmdheightmanual!"
         set "l=Oops. The sources below were not able to be included in the backup. They may be in use by an application or no longer exist in their original location. 7-Zip error code: !7ziperrorlevel!." & call :newlines & echo(
-        set "l=The newly created zip has an '[m]' added to its filename to denote missing files." & call :newlines & echo(
+        set "l=The newly created backup has an '[m]' added to its filename to denote missing files." & call :newlines & echo(
         for %%i in (!input!) do (
             setlocal disabledelayedexpansion
             set "p=%%i"
@@ -261,14 +269,23 @@ exit
     for /f "tokens=1-6 delims=/: " %%a in ('robocopy "|" . /njh') do if not defined YYYY (
         set "YYYY=%%a" & set "MM=%%b" & set "DD=%%c"
         set "H=%%d" & set "M=%%e" & set "S=%%f"
-        if "!hourformat:~0,1!"=="1" set "TOD= AM" & if !H! gtr 12 set /a "H=!H!-12" & set "TOD= PM"
+        if "!hourformat:~0,1!"=="1" (
+            set "TOD= AM"
+            if !H! gtr 12 (
+                set /a "H=!H!-12"
+                set "TOD= PM"
+            )
+            if !H! equ 00 (
+                set "H=12"
+                )
+            )
         )
     set "H=0!H!" & set "datetime=!YYYY!-!MM!-!DD!#(!H:~-2!.!M!.!S!!TOD!)"
     for /f "tokens=1,2 delims=#" %%a in ("!datetime!") do endlocal & set "date=%%a" & set "time=%%b"
 
     :: Filename formatting
     set "suffix=!date!" & if defined destname set "suffix= - !suffix!"
-    if "!timeinfilename:~0,1!"=="y" (
+    if /i "!timeinfilename:~0,1!"=="y" (
         set "suffix=!suffix! !time!"
         ) else (
         if exist "!destdir!!destname!!suffix!!ext!" (
@@ -362,7 +379,11 @@ exit
     set "inputprompttext=Source(s):" & set "inputechotext=Source(s)    ú "
     set "destdirprompttext=Destination:" & set "destdirechotext=Destination  ú "
     set "destnameprompttext=Backup name (optional):" & set "destnameechotext=Backup name  ú "
-    if "!shortcutbrackets:~0,1!"=="y" (
+    call :lowercase archivetype & set "artype=-t!archivetype!"
+    if /i "!preservealltimestamps:~0,1!"=="y" (
+        set "exttimestamps=-mtc -mta"
+        )
+    if /i "!shortcutbrackets:~0,1!"=="y" (
         set "brkl=["
         set "brkr=]"
         )
@@ -378,7 +399,7 @@ exit
     call :extractarg "-btzdest" destdir
     call :trimargs "-btzdest" destdir
     set "destdir=!destdir!\"
-    set "ext=.zip"
+    set "ext=.!archivetype!"
     set "input=!args!" & set "args="
     exit /b
 
@@ -452,6 +473,14 @@ exit
             )
         )
     set /a "l=!l!/100" & set "%~1=!l!" & set "mod=" & set "l="
+    exit /b
+
+:lowercase
+    for %%a in ("A=a" "B=b" "C=c" "D=d" "E=e" "F=f" "G=g" "H=h" "I=i"
+                "J=j" "K=k" "L=l" "M=m" "N=n" "O=o" "P=p" "Q=q" "R=r"
+                "S=s" "T=t" "U=u" "V=v" "W=w" "X=x" "Y=y" "Z=z") do (
+        set "%~1=!%~1:%%~a!"
+        )
     exit /b
 
 :newlines
