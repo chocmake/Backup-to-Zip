@@ -1,12 +1,17 @@
 # Backup to Zip
-Generate a shortcut (LNK) that when opened creates an auto timestamped ZIP using 7-Zip of the specified source files at a destination. Made originally as a straightforward, quick way for versioning game save file directories and config files, keeping them neat and organized.
+Generate a shortcut (LNK) configured with your chosen files/directories that when opened will output a timestamped backup zip at your chosen destination.
+
+Intended as a straightforward, quick way for backing up handfuls of game save file directories and config files with timestamps, keeping them versioned and organized.
+> Since LNK shortcuts have field length limits only so many paths can be included for the backup using this method. See the [Limitations](#limitations) section at the bottom for more details.
 
 ## Setup and basic usage
 
-1. Firstly have [7-Zip](https://www.7-zip.org/index.html) installed, then add its directory to the Windows PATH environment variable for your account so the script can find it (follow [this GIF guide](https://user-images.githubusercontent.com/34178938/179670355-82005d39-8277-42cf-a49f-05045e3b8699.gif)).
-2. Download the Backup to Zip script either above or in zipped form [here](https://github.com/chocmake/Backup-to-Zip/releases/latest/download/Backup.to.Zip.zip).
-3. Then set up the Source/Destination and optional shortcut name using the script as seen in the GIFs below.
-4. Once the shortcut is made double-clicking the shortcut from then on will output a timestamped zip.
+1. Firstly have [7-Zip](https://www.7-zip.org/index.html) installed. As of v0.2 the script will automatically detect it in its default install location.
+> If you installed 7-Zip to a alternative location you can add its directory to the Windows PATH, see this [GIF guide](https://user-images.githubusercontent.com/34178938/179670355-82005d39-8277-42cf-a49f-05045e3b8699.gif)
+2. [Download](https://github.com/chocmake/Backup-to-Zip/releases/latest/download/Backup.to.Zip.zip) the Backup to Zip script.
+3. Open the script and follow the prompts, dragging in the files/directories you want in the backup, along with a destination directory and optional shortcut name, as seen in the GIFs below.
+> You can also drag files/directories onto the script's icon and it will auto fill them as input sources.
+4. After the prompts have been completed an LNK shortcut will be generated. It's this shortcut that you can then double-click from then on to output a timestamped zip at your chosen destination.
 
 > The shortcut can also be moved elsewhere once created, just remember to keep the script in the same location so the shortcut can find it.
 
@@ -16,7 +21,7 @@ Showing first setting up the sources and destination with the script, then using
 
 ![Demo-1](https://user-images.githubusercontent.com/34178938/179670325-24cfa20f-a239-4b8a-b343-c62c27da9365.gif)
 
-Alternative way to add sources/destination individually into the script window, useful if files/directories are spread across different windows. Here using the date-only setting for zip filenames.
+Below shows an alternative way to add sources/destination individually into the script window, useful if files/directories are spread across different windows. Here using the date-only setting for zip filenames.
 
 > Also showing if one wants to add comments to zip filenames how the script expects them placed at the end in square brackets.
 
@@ -26,6 +31,8 @@ Alternative way to add sources/destination individually into the script window, 
 
 - Settings:
   - Choose to add the time to the filename timestamps (default) or just the date with an increasing counter.
+  - Option to additionally preserve the date created and date accessed timestamps for the zip (normally only date modified timestamps are copied).
+  > Since older versions of 7-Zip lack support for the above feature only enable if you have the 7-Zip v21+ installed.
   - 12/24 hour time (depending on the former setting).
   - Whether to wrap square brackets around the shortcut's filename to raise it above other files when sorted by name.
   - Color scheme. Auto/dark/light. Auto (default) will detect the system's theme on W10+:
@@ -42,7 +49,7 @@ Alternative way to add sources/destination individually into the script window, 
 
 ## Limitations
 
-- LNK files have limits to their field length of ~32k afaict (used by the script to store the sources/destination/custom name) and CMD itself has its own max buffer size. Something to keep in mind as the use case for the script was originally for mostly directory paths of game saves (which are typically just the parent directory paths and some single file paths, rather than hundreds/thousands of individual source paths entered which would need to be stored in the LNK's field).
-- The common, widely used method to generate the LNK shortcut (WScript.Shell) fails to work with some very specific Unicode characters in filenames (in my testing U+FF1F and U+2215), while being fine with everything else I've tried.
+- LNK files have a character limit of ~1023 for its arguments field (determined after more tests) and CMD has a limit of ~1021 characters for its input prompts (despite its max variable size limit being much larger). This means there are only so many paths that can be used for input sources and if wanting a larger number of files in the backup it's best to add the directory containing them (counts a one path) than the individual files themselves.
+- The native Windows method of generating LNK shortcuts, WScript.Shell, has issues with very specific Unicode characters in paths, specifically characters that *appear like* invalid filename characters (`?`, `/`, `:`) but which are in fact valid (such as U+FF1F, U+2215, U+003A). Since v0.2 of the script it now has a workaround for this Windows limitation so any paths containing those specific Unicode characters are correctly handled for the backup.
 - It doesn't yet check for whether a Destination directory has write permissions for the current user and will fail to initially create the LNK if it can't write to it.
 - Only works for paths with drive letters currently (ie: won't work on unmapped network paths).
