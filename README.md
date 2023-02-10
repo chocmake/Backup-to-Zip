@@ -13,7 +13,7 @@ Intended as a straightforward, quick way for backing up handfuls of files/direct
 > You can also drag files/directories onto the script's icon and it will auto fill them as input sources.
 4. After the prompts have been completed an LNK shortcut will be generated. It's this shortcut that you can then double-click from then on to output a timestamped zip at your chosen destination.
 
-> The shortcut can also be moved elsewhere once created, just remember to keep the script in the same location so the shortcut can find it.
+> The shortcut can also be moved elsewhere once created. Additionally the script can be moved if wanted as Windows will update the LNK path automatically to the new location.
 
 ## Overview
 
