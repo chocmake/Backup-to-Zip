@@ -32,9 +32,9 @@ Below shows an alternative way to add sources/destination individually into the 
 - Settings:
   - Select between zip or 7z archive type for backups.
   - Choose to add the time to the filename timestamps (default) or just the date with an increasing counter.
+  - 12/24 hour time (depending on the former setting).
   - Option to additionally preserve the date created and date accessed timestamps for the zip (normally only date modified timestamps are copied).
   > Since older versions of 7-Zip lack support for the above feature only enable if you have the 7-Zip v21+ installed.
-  - 12/24 hour time (depending on the former setting).
   - Whether to wrap square brackets around the shortcut's filename to raise it above other files when sorted by name.
   - Color scheme. Auto/dark/light. Auto (default) will detect the system's theme on W10+:
 
