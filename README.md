@@ -27,20 +27,19 @@ Below shows an alternative way to add sources/destination individually into the 
 
 ![Demo-2](https://user-images.githubusercontent.com/34178938/179670339-4cb5fda0-bfac-4c8b-a6c1-7222cd86d984.gif)
 
-## Additional features
+## Settings
 
-- Settings:
-  - Select between zip or 7z archive type for backups.
-  - Choose to add the time to the filename timestamps (default) or just the date with an increasing counter.
-  - 12/24 hour time (depending on the former setting).
-  - Option to additionally preserve the date created and date accessed timestamps for the zip (normally only date modified timestamps are copied).
-  > Since older versions of 7-Zip lack support for the above feature only enable if you have the 7-Zip v21+ installed.
-  - Whether to wrap square brackets around the shortcut's filename to raise it above other files when sorted by name.
-  - Color scheme. Auto/dark/light. Auto (default) will detect the system's theme on W10+:
+- Select between zip or 7z archive type for backups.
+- Choose to add the time to the filename timestamps (default) or just the date with an increasing counter.
+- 12/24 hour time (depending on the former setting).
+- Option to additionally preserve the date created and date accessed timestamps for the zip (normally only date modified timestamps are copied).
+> Since older versions of 7-Zip lack support for the above feature only enable if you have the 7-Zip v21+ installed.
+- Whether to wrap square brackets around the shortcut's filename to raise it above other files when sorted by name.
+- Color scheme. Auto/dark/light. Auto (default) will detect the system's theme on W10+ ([screenshot](https://user-images.githubusercontent.com/34178938/179670392-4f23af1f-eaed-4c13-bbf3-7bc45f90020f.png)).
 
-![Auto-theme-detection](https://user-images.githubusercontent.com/34178938/179670392-4f23af1f-eaed-4c13-bbf3-7bc45f90020f.png)
+## Other features
 
-- To extract the original source(s)/destination paths from a LNK shortcut it can be dragged onto the script and a text file will be output beside it containing the paths for reference. GIF:
+- The original source(s)/destination paths from a LNK shortcut can be extracted to a text file by dragging the shortcut onto the script. The text file will be created beside the shortcut:
 
 ![Demo-3](https://user-images.githubusercontent.com/34178938/179670347-6faec160-1bdd-4bcd-b970-afeb6f719e22.gif)
 
