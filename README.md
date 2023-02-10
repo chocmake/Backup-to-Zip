@@ -6,7 +6,7 @@ Intended as a straightforward, quick way for backing up handfuls of files/direct
 
 ## Setup and basic usage
 
-1. Firstly have [7-Zip](https://www.7-zip.org/index.html) installed. As of v0.2 the script will automatically detect it in its default install location.
+1. Firstly have [7-Zip](https://www.7-zip.org/index.html) installed. As of v0.2 the script will automatically detect it in its default (64-bit) install location.
 > If you installed 7-Zip to a alternative location you can add its directory to the Windows PATH, see this [GIF guide](https://user-images.githubusercontent.com/34178938/179670355-82005d39-8277-42cf-a49f-05045e3b8699.gif)
 2. [Download](https://github.com/chocmake/Backup-to-Zip/releases/latest/download/Backup.to.Zip.zip) the Backup to Zip script.
 3. Open the script and follow the prompts, dragging in the files/directories you want in the backup, along with a destination directory and optional shortcut name, as seen in the GIFs below.
