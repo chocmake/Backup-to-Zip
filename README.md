@@ -49,7 +49,7 @@ Below shows an alternative way to add sources/destination individually into the 
 
 ## Limitations
 
-- LNK files have a character limit of ~1023 for its arguments field (determined after more tests) and CMD has a limit of ~1021 characters for its input prompts (despite its max variable size limit being much larger). This means there are only so many paths that can be used for input sources and if wanting a larger number of files in the backup it's best to add the directory containing them (counts as single path) rather than a mass of individual files themselves.
+- LNK files have a character limit of ~1023 for its arguments field (determined after more tests). This means there are only so many paths that can be used for input sources and if wanting a larger number of files in the backup it's best to add the directory containing them (counts as single path) rather than a mass of individual files themselves.
 - The native Windows method of generating LNK shortcuts, WScript.Shell, has issues with very specific Unicode characters in paths, specifically characters that *appear like* invalid filename characters (`?`, `/`, `:`) but which are in fact valid (such as U+FF1F, U+2215, U+003A). Since v0.2 of the script it now has a workaround for this Windows limitation so any paths containing those specific Unicode characters are correctly handled for the backup.
 - It doesn't yet check for whether a Destination directory has write permissions for the current user and will fail to initially create the LNK if it can't write to it.
 - Only works for paths with drive letters currently (ie: won't work on unmapped network paths).
