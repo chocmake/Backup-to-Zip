@@ -1,5 +1,5 @@
 # Backup to Zip
-Generate a shortcut (LNK) configured with your chosen files/directories that when opened will output a timestamped backup zip at your chosen destination.
+Generate a shortcut (LNK) configured with chosen files/directories that when opened will output a timestamped backup zip at the chosen destination.
 
 Intended as a straightforward, quick way for backing up handfuls of files/directories. Originally made for keeping backups of game save files and settings, as a form of automatic versioning for organization and later restoration if needed.
 > Since LNK shortcuts have field length limits only so many paths can be included for the backup using this method. See the [Limitations](#limitations) section at the bottom for more details.
