@@ -10,9 +10,6 @@
 :: Author:          choc
 :: Version:         0.2 (2023-02-10)
 
-:: Note:            Keep this script in the same location, otherwise previously created
-::                  shortcuts won't be able to find it.
-
 :: Note:            If you'd like to add custom comments to the backup filenames add them 
 ::                  after the date/time and wrap the comments in square brackets.
 ::                  Eg: '2022-01-25 [my comment here].zip'
