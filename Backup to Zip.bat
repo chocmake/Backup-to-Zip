@@ -8,7 +8,7 @@
 :: Requirements:    7-Zip (CLI), Powershell (native to Windows)
 :: URL:             https://github.com/chocmake/Backup-to-Zip
 :: Author:          choc
-:: Version:         0.2 (2023-02-10)
+:: Version:         0.2.1 (2024-03-11)
 
 :: Note:            If you'd like to add custom comments to the backup filenames add them 
 ::                  after the date/time and wrap the comments in square brackets.
@@ -394,6 +394,41 @@ exit
     set "%~2=!args:*%~1 =!"
     exit /b
 
+:lastindexof
+    set "str=!%~1!"
+    set "delim=!%~2!"
+    set "delim=!delim:~0,1!"
+
+    set "str2=.!str!"
+    call :len str2 str2len 
+    for /l %%n in (!str2len! -1 0) do if "!str:~%%n,1!" equ "!delim!" (
+      set "rtn=%%n"
+      goto :break
+    )
+    set "rtn=-1"
+
+    :break
+    set "%~3=!rtn!"
+exit /b
+
+:lastsubstringbydelim
+    rem Extract last substring beginning with delimiter and output result
+    set "delim=%1"
+    set "delim=!delim:"=!"
+    set "str=!%~2!"
+
+    call :len str strlen
+    call :lastindexof str delim delimstart
+    set /a "strdiff=!strlen!-!delimstart!"
+    for %%d in (!strdiff!) do (
+        set "extracted=!str:~-%%d!"
+        set "leftover=!str:~0,-%%d!"
+        )
+    set "%~3=!extracted!"
+    rem If forth argument defined then output input string with substring removed
+    if "%~4" neq "" (set "%~4=!leftover!")
+    exit /b
+
 :filenameformat
     call :datetime
     set "suffix=!date!" & if defined destname set "suffix= - !suffix!"
@@ -406,20 +441,21 @@ exit
             for %%f in ("!destdir!!destname!!suffix! [*]!ext!") do (
                 setlocal disabledelayedexpansion
                 set "f=%%f"
+                set "origext=%%~xf"
+                set "origname=%%~nf"
                 setlocal enabledelayedexpansion
-                for /f "tokens=2,3 delims=[" %%a in ("!f!") do (
-                    setlocal disabledelayedexpansion
-                    set "a=%%a"
-                    set "b=%%b"
-                    setlocal enabledelayedexpansion
-                    rem Check if filename already has secondary square brackets (eg: `[m]`)
-                    if exist "!destdir!!destname!!suffix! [*] [*]!ext!" (
-                        ren "!f!" "!destname!!suffix! (1) [!a![!b!"
-                        ) else (
-                        ren "!f!" "!destname!!suffix! (1) [!a!"
-                        )
-                    endlocal & endlocal
+                
+                rem Determine last occurrence of opening square brackets in filename, assumed to be start of user-added comment
+                call :lastsubstringbydelim "[" origname comment orignameleftover
+
+                rem Check if filename already has secondary square brackets (eg: `[m]`)
+                if exist "!destdir!!destname!!suffix! [*] [*]!ext!" (
+                    call :lastsubstringbydelim "[" orignameleftover firstbrk
+                    ren "!f!" "!destname!!suffix! (1) !firstbrk!!comment!!ext!"
+                    ) else (
+                    ren "!f!" "!destname!!suffix! (1) !comment!!ext!"
                     )
+
                 endlocal & endlocal
                 )
             )
